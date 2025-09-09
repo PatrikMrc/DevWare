@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import LessonPage from './pages/LessonPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import './App.css'; // Estilos globais do App
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
             <Route path="/courses" element={<Courses />} />
             <Route path="/courses/:courseId" element={<CourseDetail />} />
             <Route path="/courses/:courseId/lesson/:lessonId" element={<LessonPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
         <Footer />

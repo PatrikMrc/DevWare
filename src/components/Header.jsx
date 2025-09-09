@@ -17,8 +17,8 @@ function Header() {
           </ul>
         </nav>
         <div className="auth-buttons">
-          <button className="btn primary">Login</button>
-          <button className="btn secondary">Cadastre-se</button>
+          <Link to="/login" ><button className="btn primary">Login</button></Link>
+          <Link to="/register" ><button className="btn secondary">Cadastre-se</button></Link>
         </div>
       </div>
     </header>
