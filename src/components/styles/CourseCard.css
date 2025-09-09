@@ -1,0 +1,52 @@
+.course-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
+.course-card-image {
+  width: 100%;
+  height: 180px; /* Altura fixa para a imagem do curso */
+  object-fit: cover;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.course-card-content {
+  padding: var(--spacing-md);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.course-card-title {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+}
+
+.course-card-description {
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  margin-bottom: var(--spacing-md);
+  flex-grow: 1; /* Permite que a descrição ocupe o espaço disponível */
+}
+
+.course-card-info {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+  display: flex;
+  justify-content: space-between;
+}

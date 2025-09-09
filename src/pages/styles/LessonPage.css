@@ -1,0 +1,227 @@
+.lesson-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl) 0;
+}
+
+.lesson-video-section,
+.lesson-interaction-section {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-xl);
+}
+
+.lesson-video-section h1 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.lesson-description {
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+  margin-bottom: var(--spacing-lg);
+}
+
+.video-player-container {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporção de aspecto 16:9 */
+  height: 0;
+  overflow: hidden;
+  margin-bottom: var(--spacing-lg);
+  background-color: black; /* Fundo enquanto o vídeo carrega */
+  border-radius: 8px;
+}
+
+.video-player-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  margin-bottom: var(--spacing-lg);
+  height: 10px;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: 5px;
+  width: 0%; /* Será controlado via JS */
+  transition: width 0.5s ease-out;
+}
+
+.progress-bar-container span {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: var(--dark-gray);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.lesson-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-lg);
+}
+
+.nav-button {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.nav-button:hover {
+  background-color: darken(var(--secondary-color), 10%);
+}
+
+.notes-section, .comments-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.notes-section h2, .comments-section h2 {
+  font-size: 1.6rem;
+  color: var(--dark-gray);
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--spacing-sm);
+}
+
+.notes-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-md);
+  resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.save-notes-button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 4px;
+  float: right; /* Alinha o botão à direita */
+}
+
+.save-notes-button:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+
+.comment-list {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  max-height: 300px; /* Limita a altura da lista de comentários */
+  overflow-y: auto; /* Adiciona scroll se tiver muitos comentários */
+}
+
+.comment-item {
+  border-bottom: 1px dashed var(--light-gray);
+  padding-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: var(--dark-gray);
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.comment-timestamp {
+    font-weight: normal;
+    color: var(--secondary-color);
+    font-size: 0.8rem;
+    margin-left: var(--spacing-sm);
+}
+
+.comment-text {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.new-comment-form textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-family: var(--font-family-sans);
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-sm);
+  resize: vertical;
+}
+
+.new-comment-form button {
+  background-color: var(--accent-color);
+  color: var(--white);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 4px;
+  float: right;
+}
+
+.new-comment-form button:hover {
+  background-color: darken(var(--accent-color), 10%);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .lesson-page {
+    flex-direction: column;
+  }
+
+  .lesson-video-section,
+  .lesson-interaction-section {
+    padding: var(--spacing-md);
+  }
+
+  .lesson-video-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .lesson-description {
+    font-size: 1rem;
+  }
+
+  .video-player-container {
+    padding-bottom: 65%; /* Ajusta a proporção para celular se necessário */
+  }
+
+  .lesson-navigation {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .nav-button {
+    text-align: center;
+  }
+}

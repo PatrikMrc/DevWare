@@ -1,0 +1,60 @@
+.header {
+  background-color: var(--white);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+}
+
+.logo img {
+  height: 70px; /* Ajuste conforme o tamanho do logo */
+}
+
+.nav-menu ul {
+  list-style: none;
+  display: flex;
+  gap: var(--spacing-xxl);
+}
+
+.nav-menu a {
+  color: var(--dark-gray);
+  font-weight: 600;
+  padding: var(--spacing-sm) 0;
+  transition: color 0.3s ease;
+  font-size: 18px;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active { /* Para um link ativo, se você implementar */
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.auth-buttons button {
+  margin-left: var(--spacing-sm);
+  border-radius: 20px; /* Botões mais arredondados */
+  padding: var(--spacing-sm) var(--spacing-xl);
+}
+
+.auth-buttons .btn.primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.auth-buttons .btn.secondary {
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.auth-buttons .btn.secondary:hover {
+  background-color: var(--border-color);
+}
