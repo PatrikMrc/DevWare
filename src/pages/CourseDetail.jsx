@@ -42,7 +42,7 @@ function CourseDetail() {
             <span>Nível: {course.level}</span>
             <span>Instrutor: {course.instructor}</span>
           </div>
-          <button className="enroll-button">Assinar Agora</button>
+          <Link to="/subscribe"><button className="enroll-button">Assinar Agora</button></Link>
         </div>
       </div>
 

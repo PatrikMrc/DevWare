@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './styles/Header.css';
-import logo from '../assets/Logo2.png'; // Certifique-se de ter um logo na pasta assets
+import logo from '../assets/Logo2.png';
 function Header() {
   return (
     <header className="header">
@@ -13,7 +13,7 @@ function Header() {
           <ul>
             <li><Link to="/">Início</Link></li>
             <li><Link to="/courses">Cursos</Link></li>
-            {/* Adicione outros links aqui, como "Planos", "Sobre", etc. */}
+            <li><Link to="/subscribe">Planos</Link></li>
           </ul>
         </nav>
         <div className="auth-buttons">

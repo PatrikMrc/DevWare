@@ -1,5 +1,6 @@
 .courses-page {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-xxl) 0;
+  width: 100%;
 }
 
 .page-title {

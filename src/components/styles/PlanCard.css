@@ -1,0 +1,82 @@
+.subs-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 40px 30px;
+    width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-align: center;
+}
+
+.subs-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.subs-card.featured {
+    border-color: #007bff;
+    transform: scale(1.05);
+}
+
+.subs-card.featured:hover {
+    transform: scale(1.05) translateY(-5px);
+}
+
+.subs-card h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.subs-card .price {
+    font-size: 2.2em;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.subs-card .description {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 30px;
+    min-height: 40px;
+}
+
+.subs-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.subs-btn {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.subs-btn:hover {
+    background-color: #0056b3;
+}
+
+.badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffc107;
+    color: #333;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    white-space: nowrap;
+}
