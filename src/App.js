@@ -9,6 +9,7 @@ import LessonPage from './pages/LessonPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import SubscriptionPage from './pages/Subscription'; // Importa a página de assinatura
+import PaymentPage from './pages/PaymentPage'; // Importa a página de pagamento
 import './App.css'; // Estilos globais do App
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/subscribe" element={<SubscriptionPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
           </Routes>
         </main>
         <Footer />
