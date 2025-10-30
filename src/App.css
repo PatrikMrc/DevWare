@@ -4,7 +4,8 @@
 :root {
   --primary-color: #6da7cc; /* Cor principal da empresa */
   --secondary-color: #6c757d; /* Cor secundária */
-  --accent-color: #28a745; /* Cor de destaque */
+  --accent-color: #28a745;
+  --accent-color-hover: #3efd6a; /* Cor de destaque */
   --background-color: #f8f9fa; /* Fundo geral */
   --text-color: #343a40; /* Cor do texto principal */
   --light-gray: #e9ecef;

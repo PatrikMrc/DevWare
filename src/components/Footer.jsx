@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
-        <p>&copy; {new Date().getFullYear()} Nome da Empresa. Todos os direitos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} DevWare. Todos os direitos reservados.</p>
         <nav className="footer-nav">
           <ul>
             <li><a href="#privacy">Política de Privacidade</a></li>

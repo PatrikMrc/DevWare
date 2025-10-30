@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className="home-page">
       <section className="hero-section">
-        <h1>Bem-vindo à Plataforma de Cursos da Sua Empresa!</h1>
+        <h1>Bem-vindo à Plataforma de Cursos DevWare!</h1>
         <p>Aprenda, cresça e domine novas habilidades com nossos cursos especializados.</p>
         <Link to="/courses" className="btn-primary">Explorar Cursos</Link>
       </section>

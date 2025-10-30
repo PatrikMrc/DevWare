@@ -58,7 +58,7 @@
 }
 
 .enroll-button:hover {
-  background-color: darken(var(--accent-color), 10%);
+  background-color: var(--accent-color-hover);
 }
 
 .course-content-section,
@@ -98,6 +98,7 @@
   padding: var(--spacing-md) 0;
   color: var(--dark-gray);
   transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .lesson-link:hover {

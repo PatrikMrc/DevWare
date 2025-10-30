@@ -1,9 +1,11 @@
 import React from 'react';
 import PlanCard from '../components/PlanCard';
 import './styles/Subscription.css';
+import { useNavigate } from 'react-router-dom';
+
 
 function SubscriptionPage() {
-
+    const navigate = useNavigate();
     const plans = {
         'Plano Mensal': {
             title: 'Plano Mensal',
@@ -18,9 +20,21 @@ function SubscriptionPage() {
     };
 
     // A função é chamada quando um plano é selecionado
-    const handleSelectPlan = (planTitle) => {
-        const selectedPlan = plans[planTitle];
-    };
+     const handleSelectPlan = (planTitle) => {
+    const selectedPlan = plans[planTitle];
+
+    if (selectedPlan) {
+      // Monta a URL com os parâmetros
+        const queryParams = new URLSearchParams({
+            title: selectedPlan.title,
+            price: selectedPlan.price,
+            total: selectedPlan.total
+        }).toString();
+
+      // Redireciona para a página de pagamento com os dados do plano
+      navigate(`/payment?${queryParams}`);
+    }
+  };
 
     return (
         <main className="subscription-main">

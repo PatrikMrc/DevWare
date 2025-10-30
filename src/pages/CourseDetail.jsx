@@ -51,10 +51,10 @@ function CourseDetail() {
         <ul className="lesson-list">
           {course.lessons.map(lesson => (
             <li key={lesson.id} className="lesson-item">
-              <Link to={`/courses/${courseId}/lesson/${lesson.id}`} className="lesson-link">
+              <div className="lesson-link">
                 <span>Aula {lesson.id.slice(-2)}: {lesson.title}</span>
                 <span className="lesson-duration">{lesson.duration}</span>
-              </Link>
+              </div>
             </li>
           ))}
         </ul>

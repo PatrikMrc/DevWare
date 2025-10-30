@@ -8,9 +8,9 @@ function PlanCard({ title, price, description, isFeatured, onSelect }) {
       <h2>{title}</h2>
       <p className="price">{price}</p>
       <p className="description">{description}</p>
-      <Link to="/payment"><button className="subs-btn" onClick={onSelect}>
+      <button className="subs-btn" onClick={onSelect}>
         Assinar {title.split(' ')[1]}
-      </button></Link>
+      </button>
     </div>
   );
 }
