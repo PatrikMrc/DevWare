@@ -1,12 +1,13 @@
 import './styles/LoginRegister.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext'; // <-- importa o contexto
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setToken } = useContext(AuthContext); // <-- acessa o método global para guardar o token
 
-  // State para armazenar os dados do formulário
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -28,15 +29,18 @@ const Login = () => {
       // Faz a requisição POST para o backend
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
 
+      // Pega o token retornado pela API (ajuste conforme a estrutura do seu backend)
       const token = response.data?.token;
 
       if (token) {
-        localStorage.setItem('authToken', token); // salva o token
-        navigate('/plataform'); // redireciona para a plataforma
+        // ✅ Armazena o token no Context (ele também será salvo no localStorage automaticamente)
+        setToken(token);
+
+        // Redireciona para a plataforma
+        navigate('/plataform');
       } else {
         alert('Nenhum token recebido. Verifique o backend.');
       }
-
     } catch (error) {
       console.error('Erro no login!', error.response ? error.response.data : error.message);
       alert('Erro no login! Verifique suas credenciais ou tente novamente.');

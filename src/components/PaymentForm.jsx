@@ -1,16 +1,77 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import './styles/PaymentForm.css';
-import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 function PaymentForm() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { token } = useContext(AuthContext); // pega o token do contexto global
+  // Captura os valores da URL
+  const title = searchParams.get('title');
+  const price = searchParams.get('price');
+  const total = searchParams.get('total');
 
-  // useSearchParams nos dá acesso aos parâmetros de query da URL
-    const [searchParams] = useSearchParams();
+  // Estado do formulário
+  const [formData, setFormData] = useState({
+    nome: '',
+    cpf: '',
+    cartao: '',
+    validade: '',
+  });
 
-    // Captura os valores de 'title', 'price' e 'total' da URL
-    const title = searchParams.get('title');
-    const price = searchParams.get('price');
-    const total = searchParams.get('total');
+  // Atualiza os inputs
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  // Envia os dados à API
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!token) {
+      alert('Você precisa estar logado para realizar o pagamento.');
+      navigate('/login');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/premium-subscription',
+        {
+          name: formData.nome,
+          cpf: formData.cpf,
+          cartao: formData.cartao,
+          validade: formData.validade,
+          plano: title,
+          preco: price,
+          total: total,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // ✅ token no cabeçalho
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log('Resposta da API:', response.data);
+      alert('Pagamento realizado com sucesso!');
+      navigate('/plataform');
+    } catch (error) {
+      console.error('Erro ao enviar o pagamento:', error);
+      if (error.response?.status === 401) {
+        alert('Sessão expirada. Faça login novamente.');
+        navigate('/login');
+      } else {
+        alert('Erro ao processar o pagamento. Verifique os dados e tente novamente.');
+      }
+    }
+  };
 
   return (
     <div className="card">
@@ -19,13 +80,13 @@ function PaymentForm() {
         <p>Confirme seus dados e escolha a forma de pagamento</p>
       </div>
 
-      <div className="form-container">
+      <form className="form-container" onSubmit={handleSubmit}>
         <div className="order-summary">
           <h3>Seu Pedido</h3>
           <hr />
           <div className="order-item">
-            <span className="item-label">Plano: {title}</span>
-            <span className="item-value blue-text">{price}</span>
+            <span className="item-label">Plano:</span>
+            <span className="item-value blue-text">{title}</span>
           </div>
           <hr />
           <div className="order-item">
@@ -34,50 +95,77 @@ function PaymentForm() {
           </div>
           <hr />
           <div className="order-item total">
-            <span className="item-label">Total: {total},00</span>
+            <span className="item-label">Total:</span>
+            <span className="item-value blue-text">{total},00</span>
           </div>
           <p className="access-info">Acesso Imediato</p>
         </div>
 
         <div className="payment-details">
           <h3>Detalhes do Pagamento</h3>
+
           <div className="form-group">
             <label htmlFor="nome">Nome Completo</label>
-            <input type="text" id="nome" />
+            <input
+              type="text"
+              id="nome"
+              value={formData.nome}
+              onChange={handleChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="cpf">CPF</label>
-            <input type="number" id="cpf" />
+            <input
+              type="number"
+              id="cpf"
+              value={formData.cpf}
+              onChange={handleChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="cartao">Número do Cartão</label>
-            <input type="number" id="cartao" />
+            <input
+              type="number"
+              id="cartao"
+              value={formData.cartao}
+              onChange={handleChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="validade">Validade (MM/AA)</label>
-            <input type="number" id="validade" />
+            <input
+              type="text"
+              id="validade"
+              value={formData.validade}
+              onChange={handleChange}
+              placeholder="MM/AA"
+              required
+            />
           </div>
 
           <h4>Método do Pagamento</h4>
           <div className="payment-method-container">
             <label className="radio-label">
               <input type="radio" name="payment-method" defaultChecked />
-              Cartão Bancario
+              Cartão Bancário
             </label>
-            <div className="card-icons">
-              <span className="card-icon"></span>
-              <span className="card-icon"></span>
-              <span className="card-icon"></span>
-              <span className="card-icon"></span>
-            </div>
           </div>
 
-          <button className="confirm-button">Confirmar e Pagar</button>
+          <button type="submit" className="confirm-button">
+            Confirmar e Pagar
+          </button>
           <p className="terms-text">
-            Ao confirmar, você concorda com nossos <a href="#" className="terms-link">Termos de Uso</a>
+            Ao confirmar, você concorda com nossos{' '}
+            <a href="#" className="terms-link">Termos de Uso</a>
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
