@@ -3,7 +3,10 @@ import { createContext, useState, useEffect } from 'react';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(() => {
+  const stored = localStorage.getItem('token');
+  return stored && stored !== 'null' && stored !== 'undefined' ? stored : null;
+});
 
   useEffect(() => {
     if (token) {

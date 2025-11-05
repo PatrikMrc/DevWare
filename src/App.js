@@ -11,27 +11,30 @@ import Register from './pages/Register';
 import SubscriptionPage from './pages/Subscription'; // Importa a página de assinatura
 import PaymentPage from './pages/PaymentPage'; // Importa a página de pagamento
 import './App.css'; // Estilos globais do App
-
+import { AuthProvider } from './contexts/AuthContext';
+import { PrivateRoute } from './components/PrivateRoute';
 function App() {
   return (
-    <Router>
-      <div className="app-container">
-        <Header />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/courses/:courseId" element={<CourseDetail />} />
-            <Route path="/courses/:courseId/lesson/:lessonId" element={<LessonPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/subscribe" element={<SubscriptionPage />} />
-            <Route path="/payment" element={<PaymentPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="app-container">
+          <Header />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/courses/:courseId" element={<CourseDetail />} />
+              <Route path="/courses/:courseId/lesson/:lessonId" element={<LessonPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/subscribe" element={<SubscriptionPage />} />
+              <Route path="/payment" element={<PrivateRoute><PaymentPage /></PrivateRoute>} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './styles/CourseDetail.css';
-
+import reactImg from '../assets/react.svg';
 // Dados mockados para simular detalhes do curso e aulas
 const mockCourses = [
   { 
     id: '1', 
     title: 'Fundamentos de React', 
     description: 'Aprenda os conceitos essenciais do React, desde componentes e props até hooks e gerenciamento de estado. Ideal para quem está começando no desenvolvimento front-end com React.', 
-    image: 'https://via.placeholder.com/600x300?text=React+Course', 
+    image: reactImg, 
     lessons: [
       { id: '101', title: 'Introdução ao React', duration: '15min' },
       { id: '102', title: 'Componentes e Props', duration: '20min' },

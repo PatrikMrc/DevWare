@@ -110,7 +110,7 @@ body {
 }
 
 .primary-button:hover {
-  background-color: var(--primary-hover-blue);
+  background-color: var(--secondary-color);
 }
 
 .auth-links {

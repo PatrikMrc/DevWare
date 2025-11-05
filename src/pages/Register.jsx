@@ -3,6 +3,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import './styles/LoginRegister.css';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    password_confirmation: '', // nome esperado pelo Laravel
+    password_confirmation: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +36,7 @@ const Register = () => {
 
     // Validação básica
     if (formData.password !== formData.password_confirmation) {
-      alert('As senhas não coincidem!');
+      toast.error('As senhas não coincidem!', { position: 'top-right' });
       return;
     }
 
@@ -42,14 +44,18 @@ const Register = () => {
       // Faz a requisição para a API Laravel
       const response = await axios.post('http://127.0.0.1:8000/api/store', formData);
 
-      console.log('Cadastro bem-sucedido!', response.data);
+      toast.success('Cadastro realizado com sucesso!', {
+        position: 'top-right',
+        autoClose: 2000,
+        onClose: () => navigate('/login'), // redireciona após fechar o toast
+      });
 
       // Redireciona para a tela de login
       navigate('/login');
     } catch (error) {
       console.error('Erro no cadastro!', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.message || 'Erro no cadastro! Tente novamente.';
-      alert(errorMessage);
+      toast.error(errorMessage, { position: 'top-right' });
     }
   };
 

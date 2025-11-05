@@ -2,11 +2,13 @@ import './styles/LoginRegister.css';
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext'; // <-- importa o contexto
+import { AuthContext } from '../contexts/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContext); // <-- acessa o método global para guardar o token
+  const { setToken } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -26,24 +28,36 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // Faz a requisição POST para o backend
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
-
-      // Pega o token retornado pela API (ajuste conforme a estrutura do seu backend)
       const token = response.data?.token;
 
       if (token) {
-        // ✅ Armazena o token no Context (ele também será salvo no localStorage automaticamente)
         setToken(token);
 
-        // Redireciona para a plataforma
-        navigate('/plataform');
+        // Toast de sucesso
+        toast.success('✅ Login realizado com sucesso!', {
+          position: 'top-center',
+          autoClose: 2000,
+          theme: 'colored',
+        });
+
+        // Redireciona após o toast
+        setTimeout(() => navigate('/plataform'), 2000);
       } else {
-        alert('Nenhum token recebido. Verifique o backend.');
+        toast.warning('⚠️ Nenhum token recebido. Verifique o backend.', {
+          position: 'top-center',
+          autoClose: 3000,
+          theme: 'colored',
+        });
       }
     } catch (error) {
       console.error('Erro no login!', error.response ? error.response.data : error.message);
-      alert('Erro no login! Verifique suas credenciais ou tente novamente.');
+
+      toast.error('❌ Erro no login! Verifique suas credenciais e tente novamente.', {
+        position: 'top-center',
+        autoClose: 3000,
+        theme: 'colored',
+      });
     }
   };
 
@@ -98,6 +112,9 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Container obrigatório do Toastify */}
+      <ToastContainer />
     </div>
   );
 };
