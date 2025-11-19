@@ -13,6 +13,7 @@ import PaymentPage from './pages/PaymentPage'; // Importa a página de pagamento
 import './App.css'; // Estilos globais do App
 import { AuthProvider } from './contexts/AuthContext';
 import { PrivateRoute } from './components/PrivateRoute';
+import Plataform from './pages/Plataform.jsx';
 function App() {
   return (
     <AuthProvider>
@@ -28,7 +29,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/subscribe" element={<SubscriptionPage />} />
-              <Route path="/payment" element={<PrivateRoute><PaymentPage /></PrivateRoute>} />
+              <Route path="/payment" element={<PrivateRoute><PaymentPage /></PrivateRoute>} />          
+              <Route path="/plataform" element={<PrivateRoute><Plataform /></PrivateRoute>} />
             </Routes>
           </main>
           <Footer />

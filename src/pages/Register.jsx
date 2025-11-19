@@ -50,8 +50,6 @@ const Register = () => {
         onClose: () => navigate('/login'), // redireciona após fechar o toast
       });
 
-      // Redireciona para a tela de login
-      navigate('/login');
     } catch (error) {
       console.error('Erro no cadastro!', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.message || 'Erro no cadastro! Tente novamente.';
