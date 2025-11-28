@@ -15,7 +15,10 @@ const Login = () => {
     password: '',
   });
 
-  // Atualiza o state conforme o usuário digita
+  const [loading, setLoading] = useState(false);
+
+
+  // Atualiza inputs
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,42 +26,81 @@ const Login = () => {
     });
   };
 
+  // Validação de email
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  // Sanitização de mensagens (proteção contra XSS)
+  const sanitize = (str) => {
+    return String(str).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+
   // Envia o formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (loading) return;
+
+    // Validações simples antes de enviar
+    if (!validateEmail(formData.email)) {
+      toast.error("Email inválido!", { position: "top-center" });
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error("A senha deve ter no mínimo 6 caracteres.", { position: "top-center" });
+      return;
+    }
+
+    setLoading(true);
+
+    // Atraso mínimo anti-brute-force
+    await new Promise(resolve => setTimeout(resolve, 400));
+
     try {
-      const response = await axios.post('https://devwareapi.contadinheiro.com/api/login', formData);
+      const response = await axios.post('https://devwareapi.contadinheiro.com/api/login', formData,{ timeout: 10000 }
+      );
+
       const token = response.data?.token;
 
-      if (token) {
-        setToken(token);
-
-        // Toast de sucesso
-        toast.success('✅ Login realizado com sucesso!', {
-          position: 'top-center',
-          autoClose: 2000,
-          theme: 'colored',
+      // Validação simples do token (checa se é JWT)
+      if (!token || token.split(".").length !== 3) {
+        toast.error("Token inválido recebido. Contate o administrador.", {
+          position: "top-center",
         });
-
-        // Redireciona após o toast
-        setTimeout(() => navigate('/plataform'), 2000);
-      } else {
-        toast.warning('⚠️ Nenhum token recebido. Verifique o backend.', {
-          position: 'top-center',
-          autoClose: 3000,
-          theme: 'colored',
-        });
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error('Erro no login!', error.response ? error.response.data : error.message);
 
-      toast.error('❌ Erro no login! Verifique suas credenciais e tente novamente.', {
-        position: 'top-center',
+      // Salva o token no AuthContext
+      setToken(token);
+
+      toast.success("✅ Login realizado com sucesso!", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "colored",
+      });
+
+      setTimeout(() => navigate("/plataform"), 2000);
+      
+    } catch (error) {
+      console.error("Erro no login:", error?.response?.status);
+
+      const backendMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        "Erro no login! Tente novamente.";
+
+      toast.error(sanitize(backendMessage), {
+        position: "top-center",
         autoClose: 3000,
-        theme: 'colored',
+        theme: "colored",
       });
     }
+
+    setLoading(false);
   };
 
   return (
@@ -73,6 +115,7 @@ const Login = () => {
           <h2 className="auth-title-card">Fazer Login</h2>
 
           <form onSubmit={handleSubmit} className="auth-form">
+            
             {/* EMAIL */}
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -82,6 +125,7 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -94,12 +138,17 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                disabled={loading}
               />
             </div>
 
             {/* BOTÃO */}
-            <button type="submit" className="primary-button">
-              Entrar
+            <button
+              type="submit"
+              className="primary-button"
+              disabled={loading}
+            >
+              {loading ? "Entrando..." : "Entrar"}
             </button>
           </form>
 
@@ -113,7 +162,6 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Container obrigatório do Toastify */}
       <ToastContainer />
     </div>
   );

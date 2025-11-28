@@ -1,3 +1,11 @@
+//Envio de dados via HTTPS, criptografado em trânsito
+//Senhas não são logadas, Você não imprime formData.password
+//Validação mínima de senha, verifica se coincidem, maior q 8 caracteres, 1 maiúscula, 1 minúscula, 1 número
+//Uso de toast para evitar alert() Não afeta segurança, mas evita XSS via alert injection.
+//brute-force responsavel e o servidor
+
+//melhorias futuras: esconder rota da api.
+
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +26,9 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Atualiza o state conforme o usuário digita
+
+
+  // Atualiza os campos
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -26,39 +36,83 @@ const Register = () => {
     });
   };
 
-  // Mostra/oculta senha
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
+  // Validação forte de senha
+  const validatePassword = () => {
+    const { password, password_confirmation } = formData;
+
+    if (password !== password_confirmation) {
+      toast.error('As senhas não coincidem!');
+      return false;
+    }
+
+    if (password.length < 8) {
+      toast.error('A senha deve ter no mínimo 8 caracteres.');
+      return false;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      toast.error('A senha deve conter ao menos uma letra maiúscula.');
+      return false;
+    }
+
+    if (!/[a-z]/.test(password)) {
+      toast.error('A senha deve conter ao menos uma letra minúscula.');
+      return false;
+    }
+
+    if (!/[0-9]/.test(password)) {
+      toast.error('A senha deve conter ao menos um número.');
+      return false;
+    }
+
+    return true;
+  };
+
+  // Validação de email
+  const validateEmail = () => {
+    const { email } = formData;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      toast.error('Digite um email válido.');
+      return false;
+    }
+
+    return true;
+  };
 
   // Envia o formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validação básica
-    if (formData.password !== formData.password_confirmation) {
-      toast.error('As senhas não coincidem!', { position: 'top-right' });
-      return;
-    }
+    if (!validateEmail()) return;
+    if (!validatePassword()) return;
 
     try {
-      // Faz a requisição para a API Laravel
       const response = await axios.post('https://devwareapi.contadinheiro.com/api/store', formData);
 
       toast.success('Cadastro realizado com sucesso!', {
-        position: 'top-right',
         autoClose: 2000,
-        onClose: () => navigate('/login'), // redireciona após fechar o toast
+        onClose: () => navigate('/login'),
       });
 
     } catch (error) {
-      console.error('Erro no cadastro!', error.response ? error.response.data : error.message);
-      const errorMessage = error.response?.data?.message || 'Erro no cadastro! Tente novamente.';
-      toast.error(errorMessage, { position: 'top-right' });
+      console.error('Erro no cadastro:', error);
+
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        'Erro no cadastro! Tente novamente.';
+
+      toast.error(errorMessage);
     }
   };
 
   return (
     <div className="page-container">
+      <ToastContainer />
+
       <div className="main-content">
         <div className="header-banner">
           <h1 className="banner-title">Crie sua conta e comece a aprender.</h1>
@@ -69,6 +123,7 @@ const Register = () => {
           <h2 className="auth-title-card">Cadastrar</h2>
 
           <form onSubmit={handleSubmit} className="auth-form">
+
             {/* EMAIL */}
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -94,7 +149,8 @@ const Register = () => {
                 />
                 <button
                   type="button"
-                  onClick={togglePasswordVisibility}
+                  aria-label="Mostrar/ocultar senha"
+                  onClick={() => setShowPassword(!showPassword)}
                   className="toggle-password"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -115,7 +171,8 @@ const Register = () => {
                 />
                 <button
                   type="button"
-                  onClick={toggleConfirmPasswordVisibility}
+                  aria-label="Mostrar/ocultar confirmar senha"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="toggle-password"
                 >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -132,6 +189,7 @@ const Register = () => {
           <div className="auth-links">
             Já tem uma conta? <a href="/login">Clique aqui para fazer login</a>
           </div>
+
         </div>
       </div>
     </div>
