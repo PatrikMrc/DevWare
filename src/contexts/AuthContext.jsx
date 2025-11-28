@@ -1,3 +1,5 @@
+//Atualmente o token esta sendo armazenado no localStorage, mas irei trocar para cookies futuromente por questoes de seguranca (httpOnly, secure, sameSite).
+
 import { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();

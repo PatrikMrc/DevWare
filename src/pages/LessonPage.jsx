@@ -4,7 +4,7 @@ import './styles/LessonPage.css';
 
 // Dados mockados para simular aulas e seu conteúdo
 const mockCourseLessons = {
-  '1': { // courseId '1' (Fundamentos de React)
+  '1': { // courseId '1'
     '101': {
       title: 'Introdução ao React',
       videoUrl: 'https://www.youtube.com/embed/videoseries?list=PLHz_ArekwmknHh_i0TjK6P7NnCqA-ptQ-', // Exemplo de vídeo
@@ -32,7 +32,6 @@ const mockCourseLessons = {
         prevLessonId: '103',
     },
   },
-  // ... outros cursos e suas aulas
 };
 
 function LessonPage() {

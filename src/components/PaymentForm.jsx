@@ -1,3 +1,6 @@
+//envio de cartao de credito e dados pessoais para a api precisa de mais seguranca.
+//adicionar sistema de validacao de cpf
+
 import React, { useState, useContext } from 'react';
 import './styles/PaymentForm.css';
 import axios from 'axios';

@@ -4,7 +4,9 @@
 //Uso de toast para evitar alert() Não afeta segurança, mas evita XSS via alert injection.
 //brute-force responsavel e o servidor
 
-//melhorias futuras: esconder rota da api.
+
+//melhorias futuras: esconder rota da api. back-end precisa validar senhas de forma correta, não só no front-end. Melhorar armazenamento de token (cookies httpOnly) urgentemente.
+// token em local storage pode ajudar ataques XSS
 
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
