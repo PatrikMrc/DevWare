@@ -71,7 +71,7 @@ function PaymentForm() {
 
     try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/premium-subscription',
+        'https://devwareapi.contadinheiro.com/api/premium-subscription',
         {
           name: formData.nome,
           cpf: formData.cpf,

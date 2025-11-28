@@ -4,7 +4,7 @@ import CourseCard from '../components/CourseCard';    // <-- NOVO: Importa o Hea
 import HeroBanner from '../components/HeroBanner'; // <-- NOVO: Importa o Banner                         // <-- Importa o CSS principal
 import './styles/Plataform.css';
 // Sua URL da API (ajuste se necessário)
-const API_URL = 'https://suaapi.com.br/api/cursos'; 
+const API_URL = 'https://devwareapi.contadinheiro.com/api/cursos'; 
 
 function Plataform() {
   const [cursos, setCursos] = useState([]);

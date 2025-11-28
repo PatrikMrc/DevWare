@@ -3,7 +3,7 @@ import CourseCard from '../components/CourseCard';
 import './styles/Courses.css';
 
 // 🚨 SUBSTITUA esta URL pela URL REAL da sua API que retorna a lista de cursos
-const API_URL = 'https://suaapi.com.br/api/cursos'; 
+const API_URL = 'https://devwareapi.contadinheiro.com/api/cursos'; 
 
 function Courses() {
   // 1. Estado para armazenar os cursos da API

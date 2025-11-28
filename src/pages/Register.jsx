@@ -42,7 +42,7 @@ const Register = () => {
 
     try {
       // Faz a requisição para a API Laravel
-      const response = await axios.post('http://127.0.0.1:8000/api/store', formData);
+      const response = await axios.post('https://devwareapi.contadinheiro.com/api/store', formData);
 
       toast.success('Cadastro realizado com sucesso!', {
         position: 'top-right',
